@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,21 +88,38 @@ public class Restaurant {
         }
     }
 
-    public void displayAllCustomers() {
-        for (Customer customer : customers) {
-            customer.displayInfo();
+    public void displayAllCustomers() throws SQLException {
+        String query = "SELECT * FROM Customers";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            while (resultSet.next()) {
+                System.out.println("Customer ID: " + resultSet.getString("customerId") +
+                        ", Name: " + resultSet.getString("name") +
+                        ", Contact Info: " + resultSet.getString("contactInfo"));
+            }
         }
     }
 
-    public void displayAllWaiters() {
-        for (Waiter waiter : waiters) {
-            waiter.displayInfo();
+    public void displayAllWaiters() throws SQLException {
+        String query = "SELECT * FROM Waiters";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            while (resultSet.next()) {
+                System.out.println("Employee ID: " + resultSet.getString("employeeId") +
+                        ", Name: " + resultSet.getString("name") +
+                        ", Contact Info: " + resultSet.getString("contactInfo"));
+            }
         }
     }
 
-    public void displayAllOrders() {
-        for (Order order : orders) {
-            System.out.println("Order ID: " + order.getOrderId() + ", Details: " + order.getOrderDetails());
+    public void displayAllOrders() throws SQLException {
+        String query = "SELECT * FROM Orders";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            while (resultSet.next()) {
+                System.out.println("Order ID: " + resultSet.getString("orderId") +
+                        ", Details: " + resultSet.getString("orderDetails"));
+            }
         }
     }
 
