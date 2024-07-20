@@ -9,7 +9,7 @@ public class Main {
         System.out.println("*** With Our software handle your business ***");
         System.out.println("**********************************************");
         System.out.println("\n");
-        System.out.println("Please choose an option: \n 1) ADD CUSTOMER \n 2) UPDATE CUSTOMER \n 3) REMOVE CUSTOMER \n 4) GO BACK");
+        System.out.println("Please choose an option: \n 1) ADD CUSTOMER \n 2) UPDATE CUSTOMER \n 3) REMOVE CUSTOMER \n 4) DISPLAY CUSTOMERS \n 5) GO BACK");
         System.out.printf("user > ");
         int option = answer.nextInt();
         answer.nextLine();  // Consume newline
@@ -24,7 +24,8 @@ public class Main {
                 String customer_id = answer.nextLine();
                 Customer customer = new Customer(name_customer, contact_info, customer_id);
                 restaurant.addCustomer(customer);
-                CRUD_MENU(restaurant);
+                CRUD_Customer(restaurant);
+                break;
             case 2:
                 System.out.printf("Customer ID to update: ");
                 String update_id = answer.nextLine();
@@ -33,17 +34,25 @@ public class Main {
                 System.out.printf("New Contact Info: ");
                 String new_contact_info = answer.nextLine();
                 restaurant.updateCustomer(update_id, new_name, new_contact_info);
-                CRUD_MENU(restaurant);
+                CRUD_Customer(restaurant);
+                break;
             case 3:
                 System.out.printf("Customer ID to remove: ");
                 String remove_id = answer.nextLine();
                 restaurant.removeCustomer(remove_id);
-                CRUD_MENU(restaurant);
+                CRUD_Customer(restaurant);
+                break;
             case 4:
+                restaurant.displayAllCustomers();
+                CRUD_Customer(restaurant);
+                break;
+            case 5:
                 CRUD_MENU(restaurant);
+                break;
             default:
                 System.out.println("Invalid option.");
-                CRUD_MENU(restaurant);
+                CRUD_Customer(restaurant);
+                break;
         }
     }
 
@@ -54,7 +63,7 @@ public class Main {
         System.out.println("*** With Our software handle your business ***");
         System.out.println("**********************************************");
         System.out.println("\n");
-        System.out.println("Please choose an option: \n 1) ADD WAITER \n 2) UPDATE WAITER \n 3) REMOVE WAITER \n 4) GO BACK");
+        System.out.println("Please choose an option: \n 1) ADD WAITER \n 2) UPDATE WAITER \n 3) REMOVE WAITER \n 4) DISPLAY WAITERS \n 5) GO BACK");
         System.out.printf("user > ");
         int option = answer.nextInt();
         answer.nextLine();  // Consume newline
@@ -69,7 +78,8 @@ public class Main {
                 String employee_id = answer.nextLine();
                 Waiter waiter = new Waiter(name_waiter, contact_info, employee_id);
                 restaurant.addWaiter(waiter);
-                CRUD_MENU(restaurant);
+                CRUD_WAITER(restaurant);
+                break;
             case 2:
                 System.out.printf("Employee ID to update: ");
                 String update_id = answer.nextLine();
@@ -78,17 +88,25 @@ public class Main {
                 System.out.printf("New Contact Info: ");
                 String new_contact_info = answer.nextLine();
                 restaurant.updateWaiter(update_id, new_name, new_contact_info);
-                CRUD_MENU(restaurant);
+                CRUD_WAITER(restaurant);
+                break;
             case 3:
                 System.out.printf("Employee ID to remove: ");
                 String remove_id = answer.nextLine();
                 restaurant.removeWaiter(remove_id);
-                CRUD_MENU(restaurant);
+                CRUD_WAITER(restaurant);
+                break;
             case 4:
+                restaurant.displayAllWaiters();
+                CRUD_WAITER(restaurant);
+                break;
+            case 5:
                 CRUD_MENU(restaurant);
+                break;
             default:
                 System.out.println("Invalid option.");
-                CRUD_MENU(restaurant);
+                CRUD_WAITER(restaurant);
+                break;
         }
     }
 
@@ -99,7 +117,7 @@ public class Main {
         System.out.println("*** With Our software handle your business ***");
         System.out.println("**********************************************");
         System.out.println("\n");
-        System.out.println("Please choose an option: \n 1) ADD ORDER \n 2) UPDATE ORDER \n 3) REMOVE ORDER \n 4) GO BACK");
+        System.out.println("Please choose an option: \n 1) ADD ORDER \n 2) UPDATE ORDER \n 3) REMOVE ORDER \n 4) DISPLAY ORDERS \n 5) GO BACK");
         System.out.printf("user > ");
         int option = answer.nextInt();
         answer.nextLine();  // Consume newline
@@ -112,24 +130,33 @@ public class Main {
                 String order_id = answer.nextLine();
                 Order order = new Order(order_id, order_details);
                 restaurant.addOrder(order);
-                CRUD_MENU(restaurant);
+                CRUD_ORDER(restaurant);
+                break;
             case 2:
                 System.out.printf("Order ID to update: ");
                 String update_id = answer.nextLine();
                 System.out.printf("New Order Details: ");
                 String new_order_details = answer.nextLine();
                 restaurant.updateOrder(update_id, new_order_details);
-                CRUD_MENU(restaurant);
+                CRUD_ORDER(restaurant);
+                break;
             case 3:
                 System.out.printf("Order ID to remove: ");
                 String remove_id = answer.nextLine();
                 restaurant.removeOrder(remove_id);
-                CRUD_MENU(restaurant);
+                CRUD_ORDER(restaurant);
+                break;
             case 4:
+                restaurant.displayAllOrders();
+                CRUD_ORDER(restaurant);
+                break;
+            case 5:
                 CRUD_MENU(restaurant);
+                break;
             default:
                 System.out.println("Invalid option.");
-                CRUD_MENU(restaurant);
+                CRUD_ORDER(restaurant);
+                break;
         }
     }
 
@@ -160,6 +187,7 @@ public class Main {
             default:
                 System.out.println("Invalid option.");
                 CRUD_MENU(restaurant);
+                break;
         }
     }
 
