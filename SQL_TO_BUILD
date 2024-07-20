@@ -1,0 +1,20 @@
+CREATE DATABASE RestaurantDB;
+
+USE RestaurantDB;
+
+CREATE TABLE Customers (
+    customerId VARCHAR(50) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    contactInfo VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Waiters (
+    employeeId VARCHAR(50) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    contactInfo VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Orders (
+    orderId VARCHAR(50) PRIMARY KEY,
+    orderDetails TEXT NOT NULL
+);
