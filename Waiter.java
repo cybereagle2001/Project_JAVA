@@ -1,3 +1,7 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class Waiter extends Person {
     private String employeeId;
 
@@ -17,7 +21,31 @@ public class Waiter extends Person {
         return employeeId;
     }
 
-    public void takeOrder(Order order) {
-        System.out.println("Order taken: " + order.getOrderDetails());
+    public void addWaiter(Connection connection) throws SQLException {
+        String sql = "INSERT INTO Waiters (employeeId, name, contactInfo) VALUES (?, ?, ?)";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, employeeId);
+            pstmt.setString(2, this.getName());
+            pstmt.setString(3, this.getContactInfo());
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void updateWaiter(Connection connection, String newName, String newContactInfo) throws SQLException {
+        String sql = "UPDATE Waiters SET name = ?, contactInfo = ? WHERE employeeId = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, newName);
+            pstmt.setString(2, newContactInfo);
+            pstmt.setString(3, employeeId);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void removeWaiter(Connection connection) throws SQLException {
+        String sql = "DELETE FROM Waiters WHERE employeeId = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, employeeId);
+            pstmt.executeUpdate();
+        }
     }
 }

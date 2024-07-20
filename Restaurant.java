@@ -1,4 +1,7 @@
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,35 +20,75 @@ public class Restaurant {
     }
 
     public void addCustomer(Customer customer) throws SQLException {
-        String sql = "INSERT INTO Customers (customerId, name, contactInfo) VALUES (?, ?, ?)";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, customer.getCustomerId());
-            pstmt.setString(2, customer.getName());
-            pstmt.setString(3, customer.getContactInfo());
-            pstmt.executeUpdate();
-        }
+        customer.addCustomer(connection);
         customers.add(customer);
     }
 
-    public void addWaiter(Waiter waiter) throws SQLException {
-        String sql = "INSERT INTO Waiters (employeeId, name, contactInfo) VALUES (?, ?, ?)";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, waiter.getEmployeeId());
-            pstmt.setString(2, waiter.getName());
-            pstmt.setString(3, waiter.getContactInfo());
-            pstmt.executeUpdate();
+    public void updateCustomer(String customerId, String newName, String newContactInfo) throws SQLException {
+        for (Customer customer : customers) {
+            if (customer.getCustomerId().equals(customerId)) {
+                customer.updateCustomer(connection, newName, newContactInfo);
+                break;
+            }
         }
+    }
+
+    public void removeCustomer(String customerId) throws SQLException {
+        for (Customer customer : customers) {
+            if (customer.getCustomerId().equals(customerId)) {
+                customer.removeCustomer(connection);
+                customers.remove(customer);
+                break;
+            }
+        }
+    }
+
+    public void addWaiter(Waiter waiter) throws SQLException {
+        waiter.addWaiter(connection);
         waiters.add(waiter);
     }
 
-    public void addOrder(Order order) throws SQLException {
-        String sql = "INSERT INTO Orders (orderId, orderDetails) VALUES (?, ?)";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, order.getOrderId());
-            pstmt.setString(2, order.getOrderDetails());
-            pstmt.executeUpdate();
+    public void updateWaiter(String employeeId, String newName, String newContactInfo) throws SQLException {
+        for (Waiter waiter : waiters) {
+            if (waiter.getEmployeeId().equals(employeeId)) {
+                waiter.updateWaiter(connection, newName, newContactInfo);
+                break;
+            }
         }
+    }
+
+    public void removeWaiter(String employeeId) throws SQLException {
+        for (Waiter waiter : waiters) {
+            if (waiter.getEmployeeId().equals(employeeId)) {
+                waiter.removeWaiter(connection);
+                waiters.remove(waiter);
+                break;
+            }
+        }
+    }
+
+    public void addOrder(Order order) throws SQLException {
+        order.addOrder(connection);
         orders.add(order);
+    }
+
+    public void updateOrder(String orderId, String newOrderDetails) throws SQLException {
+        for (Order order : orders) {
+            if (order.getOrderId().equals(orderId)) {
+                order.updateOrder(connection, newOrderDetails);
+                break;
+            }
+        }
+    }
+
+    public void removeOrder(String orderId) throws SQLException {
+        for (Order order : orders) {
+            if (order.getOrderId().equals(orderId)) {
+                order.removeOrder(connection);
+                orders.remove(order);
+                break;
+            }
+        }
     }
 
     public void displayAllCustomers() {
